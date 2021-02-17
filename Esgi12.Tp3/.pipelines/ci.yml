@@ -25,3 +25,11 @@ stages:
         testResultsFormat: VSTest
         testResultsFiles: '**/*.trx'
       displayName: Publish tests report
+    - task: DotNetCoreCLI@2
+      displayName: Publish project files
+      inputs:
+        command: publish
+        arguments: '--output $(Build.ArtifactStagingDirectory) --
+configuration $(BUILD_CONFIGURATION) --no-build'
+        zipAfterPublish: true
+
