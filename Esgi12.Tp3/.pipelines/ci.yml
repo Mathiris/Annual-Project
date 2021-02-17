@@ -1,3 +1,5 @@
+variables:
+ BUILD_CONFIGURATION: Release
 trigger: none
 stages:
 - stage: Validate
@@ -13,9 +15,9 @@ stages:
       displayName: Install .NET SDK
     - script: dotnet restore
       displayName: Restore dependencies
-    - script: dotnet build --no-restore
+    - script: dotnet build --no-restore --configuration$(BUILD_CONFIGURATION)
       displayName: Build project
-    - script: dotnet test --no-build --logger trx --collect "Code Coverage"
+    - script: dotnet test --no-build --configuration$(BUILD_CONFIGURATION) --logger trx --collect "Code Coverage"
       displayName: Launch unit tests
     - task: PublishTestResults@2
       inputs:
