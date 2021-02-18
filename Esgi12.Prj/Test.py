@@ -1,7 +1,7 @@
 from flask import Flask
 import urllib.request, json
 
-version = "1"
+version = "2"
 
 app = Flask(__name__)
 @app.route('/')
