@@ -31,3 +31,8 @@ stages:
         command: publish
         arguments: '--output $(Build.ArtifactStagingDirectory) --configuration $(BUILD_CONFIGURATION) --no-build'
         zipAfterPublish: true
+    - task: PublishPipelineArtifact@1
+      inputs:
+        artifact: WebApi
+        targetPath: $(Build.ArtifactStagingDirectory)
+      displayName: Publish artifact
