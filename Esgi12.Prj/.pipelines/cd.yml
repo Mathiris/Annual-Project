@@ -1,0 +1,54 @@
+resources:
+  pipelines:
+  - pipeline: EsgiProjetCI
+    source: Esgi12.Projet-CI
+trigger:
+  branches:
+    include:
+      - main
+stages:
+  - stage: Staging
+    jobs:
+    - deployment: Deploy
+      environment: Staging-Projet
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: none
+              - download: EsgiProjetCI
+              - task: UsePythonVersion@0
+                inputs:
+                  versionSpec: '3.9'
+                displayName: 'Use Python version'
+              - task: AzureRmWebAppDeployment@4
+                displayName: Deploy to Azure Web App
+                inputs:
+                  azureSubscription: esgi-tp
+                  webAppName: esgi-devops12prj-app
+                  deployToSlotOrASE: true
+                    slotName: staging
+                    resourceGroupName: esgi-devops12-rg
+                  package: $(Pipeline.Workspace)/EsgiProjetCI/$(Build.BuildId).zip
+
+  - stage: Prod
+    jobs:
+    - deployment: Deploy
+      environment: Prod-Projet
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: none
+              - download: EsgiProjetCI
+              - task: UsePythonVersion@0
+                inputs:
+                  versionSpec: '3.9'
+                displayName: 'Use Python version'
+              - task: AzureRmWebAppDeployment@4
+                displayName: Deploy to Azure Web App
+                inputs:
+                  azureSubscription: esgi-tp
+                  webAppName: esgi-devops12prj-app
+                  resourceGroupName: esgi-devops12-rg
+                  package: $(Pipeline.Workspace)/EsgiProjetCI/$(Build.BuildId).zip
