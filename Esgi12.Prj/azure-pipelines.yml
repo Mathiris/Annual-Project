@@ -1,0 +1,25 @@
+trigger: none
+stages:
+- stage: Validate
+  jobs:
+  - job: Build
+    displayName: Build Web API
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        version: 5.0.x
+      displayName: Install .NET SDK
+    - script: dotnet restore
+      displayName: Restore dependencies
+    - script: dotnet build --no-restore
+      displayName: Build project
+    - script: dotnet test --no-build --logger trx --collect "Code Coverage"
+      displayName: Launch unit tests
+    - task: PublishTestResults@2
+      inputs:
+        testRunTitle: Unit Tests
+        testResultsFormat: VSTest
+        testResultsFiles: '**/*.trx'
+      displayName: Publish tests report
