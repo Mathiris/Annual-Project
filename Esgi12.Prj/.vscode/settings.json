@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+    "**/.pipelines/**/*.yml": "azure-pipelines"
+    },
+    "[azure-pipelines]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,"editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+        },
+        "editor.autoIndent": "full",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true
+        }
+}
+       
