@@ -1,0 +1,4 @@
+resources:
+  pipelines:
+    - pipeline: EsgiPrj-CI
+      source: Esgi12.Prj-CI
